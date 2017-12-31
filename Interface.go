@@ -4,6 +4,7 @@ import "net/http"
 
 type Interface interface {
 	GetTicker(coin string) (*TickerItem, error)
+	GetOrderBook(coin string) (*OrderBookResponse, error)
 }
 
 //NewWithClient return a instance from MarketTicker, with optional client configuration

@@ -13,3 +13,24 @@ type TickerItem struct {
 type TickerResponse struct {
 	TickerItem `json:"ticker"`
 }
+
+type Ask []float64
+type Bid []float64
+
+func (c Ask) Price() float64 {
+	return c[0]
+}
+func (c Ask) Amount() float64 {
+	return c[1]
+}
+func (c Bid) Price() float64 {
+	return c[0]
+}
+func (c Bid) Amount() float64 {
+	return c[1]
+}
+
+type OrderBookResponse struct {
+	Asks []Ask `json:"asks"`
+	Bids []Bid `json:"bids"`
+}

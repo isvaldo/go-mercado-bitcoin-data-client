@@ -25,6 +25,15 @@ func (c *HTTP) GetTicker(coin string) (*TickerItem, error) {
 	return &response.TickerItem, nil
 }
 
+func (c *HTTP) GetOrderBook(coin string) (*OrderBookResponse, error) {
+	response := OrderBookResponse{}
+	path := fmt.Sprintf("%s/%s/orderbook", c.BaseURL, strings.ToUpper(coin))
+	if err := c.doRequest("GET", path, nil, &response); err != nil {
+		return nil, errors.Wrapf(err, "Error on execute request:[%s]", path)
+	}
+	return &response, nil
+}
+
 //doRequest is help for execute request and parse the response
 func (c *HTTP) doRequest(method, url string, body io.Reader, to interface{}) error {
 	req, err := http.NewRequest(method, url, body)

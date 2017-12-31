@@ -34,6 +34,15 @@ func (c *HTTP) GetOrderBook(coin string) (*OrderBookResponse, error) {
 	return &response, nil
 }
 
+func (c *HTTP) GetLastTrades(coin string) (*TradeResponse, error) {
+	response := TradeResponse{}
+	path := fmt.Sprintf("%s/%s/trades", c.BaseURL, strings.ToUpper(coin))
+	if err := c.doRequest("GET", path, nil, &response.Trades); err != nil {
+		return nil, errors.Wrapf(err, "Error on execute request:[%s]", path)
+	}
+	return &response, nil
+}
+
 //doRequest is help for execute request and parse the response
 func (c *HTTP) doRequest(method, url string, body io.Reader, to interface{}) error {
 	req, err := http.NewRequest(method, url, body)

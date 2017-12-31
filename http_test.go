@@ -38,3 +38,21 @@ func TestOrderBookMustBeReturnMockedValues(t *testing.T) {
 		fmt.Println(bidsItem.Price())
 	}
 }
+
+func TestTradesMustBeReturnMockedValues(t *testing.T) {
+
+	cli := New("https://www.mercadobitcoin.net/api")
+
+	tradesResponse, err := cli.GetLastTrades("btc")
+	if err != nil {
+		panic(err)
+	}
+
+	for _, tradeItens := range tradesResponse.Trades {
+		fmt.Println(tradeItens.Price)
+		fmt.Println(tradeItens.Amount)
+		fmt.Println(tradeItens.Date)
+		fmt.Println(tradeItens.Tid)
+		fmt.Println(tradeItens.Type)
+	}
+}

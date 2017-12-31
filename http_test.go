@@ -56,3 +56,16 @@ func TestTradesMustBeReturnMockedValues(t *testing.T) {
 		fmt.Println(tradeItens.Type)
 	}
 }
+
+func TestSummaryMustBeReturnMockedValues(t *testing.T) {
+
+	cli := New("https://www.mercadobitcoin.net/api")
+
+	summary, err := cli.GetSummaryAt("btc", "2018-12-30")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(summary.Opening)
+	fmt.Println(summary.Closing)
+}

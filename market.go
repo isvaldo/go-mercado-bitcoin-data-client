@@ -31,6 +31,18 @@ type TradeResponse struct {
 	Trades []TradeItem
 }
 
+type SummaryItem struct {
+	Lowest   int     `json:"lowest"`
+	Volume   float64 `json:"volume"`
+	Amount   int     `json:"amount"`
+	AvgPrice float64 `json:"avg_price"`
+	Opening  float64 `json:"opening"`
+	Date     string  `json:"date"`
+	Closing  int     `json:"closing"`
+	Highest  float64 `json:"highest"`
+	Quantity float64 `json:"quantity"`
+}
+
 type Ask []float64
 type Bid []float64
 

@@ -122,6 +122,7 @@ func main() {
 
 <details>
 <summary>Code Response</summary>
+
 ```sh
 /tmp/___go_build_main_go #gosetup
 1514840316
@@ -132,8 +133,87 @@ func main() {
 49599.00000000
 47500.00000000
 ```
+
 </details>
+
 </details>
+
+#### OrderBook
+Livro de ofertas é composto por duas listas: (1) uma lista com as ofertas de compras ordenadas pelo maior valor; (2) uma lista com as ofertas de venda ordenadas pelo menor valor. O livro mostra até 1000 ofertas de compra e até 1000 ofertas de venda.
+
+Uma oferta é constituída por uma ou mais ordens, sendo assim, a quantidade da oferta é o resultado da soma das quantidades das ordens de mesmo preço unitário. Caso uma oferta represente mais de uma ordem, a prioridade de execução se dá com base na data de criação da ordem, da mais antiga para a mais nova.
+
+<details>
+<summary>Resumo do orderbook</summary>
+
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/isvaldo/go-mercado-bitcoin-data-client"
+)
+
+func main() {
+	cli := New("https://www.mercadobitcoin.net/api")
+    
+    	orderItem, err := cli.GetOrderBook("btc")
+    	if err != nil {
+    		panic(err)
+    	}
+    
+    	for _, askItem := range orderItem.Asks {
+    		fmt.Println(askItem.Amount())
+    		fmt.Println(askItem.Price())
+    	}
+    	for _, bidsItem := range orderItem.Bids {
+    		fmt.Println(bidsItem.Amount())
+    		fmt.Println(bidsItem.Price())
+    	}
+}
+
+```
+
+</details>
+
+#### Trades
+Histórico de negociações realizadas.
+
+<details>
+<summary>Resumo do orderbook</summary>
+
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/isvaldo/go-mercado-bitcoin-data-client"
+)
+
+func main() {
+    cli := New("https://www.mercadobitcoin.net/api")
+
+	tradesResponse, err := cli.GetLastTrades("btc")
+	if err != nil {
+		panic(err)
+	}
+
+	for _, tradeItens := range tradesResponse.Trades {
+		fmt.Println(tradeItens.Price)
+		fmt.Println(tradeItens.Amount)
+		fmt.Println(tradeItens.Date)
+		fmt.Println(tradeItens.Tid)
+		fmt.Println(tradeItens.Type)
+	}
+}
+
+```
+
+</details>
+
+
 
 ### Donate
 

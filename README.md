@@ -105,10 +105,20 @@ func main() {
 ```
 
 <details>
-<summary>Resumo das ultimas 24 horas BTC</summary>
+<summary>Http Response</summary>
 
-```go
-//Ok:///*???*/
+```javascript
+{
+'ticker': {
+'high': 14481.47000000,
+'low': 13706.00002000,
+'vol': 443.73564488,
+'last': 14447.01000000,
+'buy': 14447.00100000,
+'sell': 14447.01000000,
+'date': 1502977646
+}
+}
 ```
 </details>
 </details>

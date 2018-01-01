@@ -11,19 +11,53 @@
 
 # go-mercado-bitcoin-data-client
 
-/// 
-  ...|---|...
-///
+Api de dados do mercado bitcoin oferece uma maneira automatica de obter os dados
+do orderbook e negociações, esse client facilita o acesso a essas infomações atraves da api
+oficial  <a href="https://www.mercadobitcoin.com.br/api-doc/">Docs</a>
 
+
+## Install
+Para baixar as dependencias do projeto rode o seguinte comando
+
+```sh
+dep ensure
+``` 
+
+### Examples
 
 <details>
-<summary>Examples</summary>
+<summary>Iniciando client</summary>
 
 ```go
-a := func () {
-	
-	
-}()
+package main
+
+import (
+	"fmt"
+	"github.com/isvaldo/go-mercado-bitcoin-data-client"
+)
+
+func main() {
+	cli := marketbit.New("https://www.mercadobitcoin.net/api")
+	fmt.Println(cli)
+}
+```
+</details>
+
+<details>
+<summary>Resumo 24 horas</summary>
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/isvaldo/go-mercado-bitcoin-data-client"
+)
+
+func main() {
+	cli := marketbit.New("https://www.mercadobitcoin.net/api")
+	fmt.Println(cli)
+}
 ```
 </details>
 

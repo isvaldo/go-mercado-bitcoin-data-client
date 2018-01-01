@@ -108,7 +108,6 @@ func main() {
 <summary>Http Response</summary>
 
 ```javascript
-{
 'ticker': {
 'high': 14481.47000000,
 'low': 13706.00002000,
@@ -118,7 +117,20 @@ func main() {
 'sell': 14447.01000000,
 'date': 1502977646
 }
-}
+```
+</details>
+
+<details>
+<summary>Code Response</summary>
+```sh
+/tmp/___go_build_main_go #gosetup
+1514840316
+115.06076518
+48550.00000000
+48550.00000000
+48400.00000000
+49599.00000000
+47500.00000000
 ```
 </details>
 </details>

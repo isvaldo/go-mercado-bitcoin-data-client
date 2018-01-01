@@ -14,6 +14,19 @@
 /// 
   ...|---|...
 ///
+
+
+<details>
+<summary>Examples</summary>
+
+```go
+a := func () {
+	
+	
+}()
+```
+</details>
+
 ### Donate
 
 https://isvaldo.github.io/donate-bitcoin/

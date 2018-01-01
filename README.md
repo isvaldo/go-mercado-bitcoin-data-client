@@ -25,8 +25,10 @@ dep ensure
 
 ### Examples
 
+
+#### Client
 <details>
-<summary>Iniciando client</summary>
+<summary>Iniciando Client</summary>
 
 ```go
 package main
@@ -42,9 +44,41 @@ func main() {
 }
 ```
 </details>
+<details>
+
+<summary>Customizando http client</summary>
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/isvaldo/go-mercado-bitcoin-data-client"
+)
+
+func main() {
+	cli := marketbit.NewWithClient("https://www.mercadobitcoin.net/api",createHTTPClient(10,10))
+	fmt.Println(cli)
+}
+
+func createHTTPClient(maxIdleConnections, requestTimeout int) *http.Client {
+	return &http.Client{
+		Transport: &http.Transport{
+			MaxIdleConnsPerHost: maxIdleConnections,
+		},
+		Timeout: time.Duration(requestTimeout) * time.Second,
+	}
+}
+```
+</details>
+
+
+#### Ticker
+Retorna informações com o resumo das últimas 24 horas de negociações.
+
 
 <details>
-<summary>Resumo 24 horas</summary>
+<summary>Resumo das ultimas 24 horas BTC</summary>
 
 ```go
 package main
@@ -56,9 +90,27 @@ import (
 
 func main() {
 	cli := marketbit.New("https://www.mercadobitcoin.net/api")
-	fmt.Println(cli)
+	tickerItem, err := cli.GetTicker("btc") // btc, ltc, bch
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(tickerItem.Date)
+	fmt.Println(tickerItem.Vol)
+	fmt.Println(tickerItem.Sell)
+	fmt.Println(tickerItem.Last)
+	fmt.Println(tickerItem.Buy)
+	fmt.Println(tickerItem.High)
+	fmt.Println(tickerItem.Low)
 }
 ```
+
+<details>
+<summary>Resumo das ultimas 24 horas BTC</summary>
+
+```go
+//Ok:///*???*/
+```
+</details>
 </details>
 
 ### Donate

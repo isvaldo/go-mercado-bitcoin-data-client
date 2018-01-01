@@ -11,5 +11,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println(tickerItem.Date)
+	fmt.Println(tickerItem.Vol)
+	fmt.Println(tickerItem.Sell)
+	fmt.Println(tickerItem.Last)
+	fmt.Println(tickerItem.Buy)
+	fmt.Println(tickerItem.High)
 	fmt.Println(tickerItem.Low)
 }

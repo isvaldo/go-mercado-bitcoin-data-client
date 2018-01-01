@@ -78,7 +78,7 @@ Retorna informações com o resumo das últimas 24 horas de negociações.
 
 
 <details>
-<summary>Resumo das ultimas 24 horas BTC</summary>
+<summary>Exemplo Ticker</summary>
 
 ```go
 package main
@@ -144,7 +144,7 @@ Livro de ofertas é composto por duas listas: (1) uma lista com as ofertas de co
 Uma oferta é constituída por uma ou mais ordens, sendo assim, a quantidade da oferta é o resultado da soma das quantidades das ordens de mesmo preço unitário. Caso uma oferta represente mais de uma ordem, a prioridade de execução se dá com base na data de criação da ordem, da mais antiga para a mais nova.
 
 <details>
-<summary>Resumo do orderbook</summary>
+<summary>Exemplo Orderbook</summary>
 
 
 ```go
@@ -181,7 +181,7 @@ func main() {
 Histórico de negociações realizadas.
 
 <details>
-<summary>Resumo do orderbook</summary>
+<summary>Exemplo Trades</summary>
 
 
 ```go
@@ -213,8 +213,77 @@ func main() {
 
 </details>
 
+#### Trades Range
+Histórico de negociações realizadas, entre um intervalo de tempo
+
+<details>
+<summary>Exemplo Trades Range</summary>
+
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/isvaldo/go-mercado-bitcoin-data-client"
+)
+
+func main() {
+   cli := New("https://www.mercadobitcoin.net/api")
+   
+   	tradesResponse, err := cli.GetTradesRange("btc", "2017/12/30", "2017/12/31")
+   	if err != nil {
+   		panic(err)
+   	}
+   	for _, tradeItens := range tradesResponse.Trades {
+   		fmt.Println(tradeItens.Price)
+   		fmt.Println(tradeItens.Amount)
+   		fmt.Println(tradeItens.Date)
+   		fmt.Println(tradeItens.Tid)
+   		fmt.Println(tradeItens.Type)
+   	}
+}
+
+```
+
+</details>
+
+#### Day Summary
+Retorna resumo diário de negociações realizadas.
+
+<details>
+<summary>Exemplo Summary</summary>
+
+
+```go
+package main
+
+import (
+	"fmt"
+	"github.com/isvaldo/go-mercado-bitcoin-data-client"
+)
+
+func main() {
+   
+	cli := New("https://www.mercadobitcoin.net/api")
+
+	summary, err := cli.GetSummaryAt("btc", "2017-12-30")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(summary.Opening)
+	fmt.Println(summary.Closing)
+}
+
+```
+
+</details>
+
 
 
 ### Donate
 
-https://isvaldo.github.io/donate-bitcoin/
+<a href="https://isvaldo.github.io/donate-bitcoin/">Bitcoin</a>
+
+Doge: DCgf2nJwhhkkDXKHPhbJb7URtRLRXHaw6T

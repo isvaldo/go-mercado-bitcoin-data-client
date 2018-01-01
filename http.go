@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
-	"time"
 )
 
 // concrete Implementation of marketbit.Interface
@@ -44,28 +43,38 @@ func (c *HTTP) GetLastTrades(coin string) (*TradeResponse, error) {
 	return &response, nil
 }
 
+func (c *HTTP) GetTradesRange(coin string, from interface{}, to interface{}) (*TradeResponse, error) {
+	fromDate, err := GuessDateType(from)
+	if err != nil {
+		return nil, errors.Wrap(err, "Error on guess date type")
+	}
+	toDate, err := GuessDateType(to)
+	if err != nil {
+		return nil, errors.Wrap(err, "Error on guess date type")
+	}
+
+	response := TradeResponse{}
+	path := fmt.Sprintf("%s/%s/trades/%d/%d/",
+		c.BaseURL,
+		strings.ToUpper(coin),
+		fromDate.Unix(),
+		toDate.Unix())
+	if err := c.doRequest("GET", path, nil, &response.Trades); err != nil {
+		return nil, errors.Wrapf(err, "Error on execute request:[%s]", path)
+	}
+	return &response, nil
+}
+
 func (c *HTTP) GetSummaryAt(coin string, date interface{}) (*SummaryItem, error) {
-	dateDefault := time.Now().AddDate(0, 0, -1)
-	var err error
-	switch date.(type) {
-	case string:
-		dateDefault, err = time.Parse("2006-01-02", date.(string))
-		if err != nil {
-			return nil, errors.Wrap(err, "Parse Error, format: 2006-01-02")
-		}
-	case int, int64:
-		dateDefault = time.Unix(date.(int64), 64)
-	case time.Time:
-		dateDefault = date.(time.Time)
-	default:
-		return nil, errors.New("Unknown date type")
+	dateDefault, err := GuessDateType(date)
+	if err != nil {
+		return nil, errors.Wrap(err, "Error on guess date type")
 	}
 	response := SummaryItem{}
 	path := fmt.Sprintf("%s/%s/day-summary/%d/%d/%d",
 		c.BaseURL,
 		strings.ToUpper(coin),
 		dateDefault.Year(), dateDefault.Month(), dateDefault.Day())
-
 	if err := c.doRequest("GET", path, nil, &response); err != nil {
 		return nil, errors.Wrapf(err, "Error on execute request:[%s]", path)
 	}

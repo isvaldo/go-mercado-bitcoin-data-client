@@ -6,6 +6,7 @@ type Interface interface {
 	GetTicker(coin string) (*TickerItem, error)
 	GetOrderBook(coin string) (*OrderBookResponse, error)
 	GetLastTrades(coin string) (*TradeResponse, error)
+	GetTradesRange(coin string, from interface{}, to interface{}) (*TradeResponse, error)
 	GetSummaryAt(coin string, date interface{}) (*SummaryItem, error)
 }
 

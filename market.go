@@ -1,5 +1,12 @@
 package marketbit
 
+import (
+	"github.com/pkg/errors"
+	"strconv"
+	"strings"
+	"time"
+)
+
 type TickerItem struct {
 	High string `json:"high"`
 	Low  string `json:"low"`
@@ -32,13 +39,13 @@ type TradeResponse struct {
 }
 
 type SummaryItem struct {
-	Lowest   int     `json:"lowest"`
+	Lowest   float64 `json:"lowest"`
 	Volume   float64 `json:"volume"`
-	Amount   int     `json:"amount"`
+	Amount   float64 `json:"amount"`
 	AvgPrice float64 `json:"avg_price"`
 	Opening  float64 `json:"opening"`
 	Date     string  `json:"date"`
-	Closing  int     `json:"closing"`
+	Closing  float64 `json:"closing"`
 	Highest  float64 `json:"highest"`
 	Quantity float64 `json:"quantity"`
 }
@@ -57,4 +64,31 @@ func (c Bid) Price() float64 {
 }
 func (c Bid) Amount() float64 {
 	return c[1]
+}
+
+func GuessDateType(date interface{}) (*time.Time, error) {
+	dateDefault := time.Now().AddDate(0, 0, -1)
+	var err error
+	switch date.(type) {
+	case string:
+		separator := "-"
+		for _, bytes := range date.(string) {
+			_, err := strconv.Atoi(string(bytes))
+			if err != nil {
+				separator = string(bytes)
+			}
+		}
+		dateDefault, err = time.Parse(strings.Replace("2006#01#02", "#", separator, 2), date.(string))
+		if err != nil {
+			return nil, errors.Wrap(err, "Parse Error, format: 2006-01-02")
+		}
+	case int, int64:
+		dateDefault = time.Unix(date.(int64), 64)
+	case time.Time:
+		dateDefault = date.(time.Time)
+	default:
+		return nil, errors.New("Unknown date type")
+	}
+
+	return &dateDefault, nil
 }

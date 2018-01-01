@@ -57,11 +57,28 @@ func TestTradesMustBeReturnMockedValues(t *testing.T) {
 	}
 }
 
+func TestTradesRangeMustBeReturnMockedValues(t *testing.T) {
+
+	cli := New("https://www.mercadobitcoin.net/api")
+
+	tradesResponse, err := cli.GetTradesRange("btc", "2017/12/29", "2017/12/30")
+	if err != nil {
+		panic(err)
+	}
+	for _, tradeItens := range tradesResponse.Trades {
+		fmt.Println(tradeItens.Price)
+		fmt.Println(tradeItens.Amount)
+		fmt.Println(tradeItens.Date)
+		fmt.Println(tradeItens.Tid)
+		fmt.Println(tradeItens.Type)
+	}
+}
+
 func TestSummaryMustBeReturnMockedValues(t *testing.T) {
 
 	cli := New("https://www.mercadobitcoin.net/api")
 
-	summary, err := cli.GetSummaryAt("btc", "2018-12-30")
+	summary, err := cli.GetSummaryAt("btc", "2017-12-30")
 	if err != nil {
 		panic(err)
 	}
